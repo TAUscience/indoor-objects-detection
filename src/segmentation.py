@@ -4,12 +4,23 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 
+def preprocesar(src):
+
+    img = Image.open(src)
+    img_np = np.array(img)
+
+    gray = cv2.cvtColor(img_np, cv2.COLOR_RGB2GRAY)
+    # Aplicar suavizado Gaussiano
+    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+
+    return img_np,gray,blurred,img
+
 
 def segmentar(src):
+    #Obtener resultados preprocesados
+    _, _, blurred, img = preprocesar(src)
     # Cargar modelo YOLOv5s
     model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
-    img = Image.open(src)
-    img_np = np.array(img)  # Convertir a  numpy
     #YOLO
     results = model(src)
     #Lista de cajas bounding boxes
@@ -28,11 +39,7 @@ def segmentar(src):
             draw.rectangle([x_min, y_min, x_max, y_max], outline='red', width=3)
             bounding_boxes.append([x_min, y_min, x_max, y_max])
 
-    # Escala de grises
-    gray = cv2.cvtColor(img_np, cv2.COLOR_RGB2GRAY)
-    # Aplicar suavizado Gaussiano
-    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-    # Aplicar Canny
+    # Canny
     edges = cv2.Canny(blurred, 100, 200)
     # Encontrar contornos
     contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -43,16 +50,18 @@ def segmentar(src):
             draw.rectangle([x, y, x + w, y + h], outline='blue', width=2)
             bounding_boxes.append([x, y, x + w, y + h])
 
-    return img, np.array(bounding_boxes)
+    return img, np.array(bounding_boxes), np.array(img)
+
 
 
 #____________Ejemplo de uso
 '''
 
-img, bounding_boxes  = segmentar('../data/test/images/888.png')
 
-#output_image_path = 'output_image.jpg'
-#img.save(output_image_path)
+img, bounding_boxes, _  = segmentar('../data/test/images/888.png')
+
+output_image_path = 'output_image.jpg'
+img.save(output_image_path)
 
 print(bounding_boxes)
 
