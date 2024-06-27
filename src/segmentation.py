@@ -91,6 +91,8 @@ def agrupar_colores(imagen):
 
 
 # Ejemplo de uso
+'''
+
 img, bounding_boxes, _ = segmentar('../data/test/images/1015.png')
 
 # Dibujar recuadro 0.330290 0.562228 0.139548 0.234109
@@ -111,3 +113,5 @@ plt.imshow(img)
 plt.show()
 
 print(bounding_boxes)
+
+'''
