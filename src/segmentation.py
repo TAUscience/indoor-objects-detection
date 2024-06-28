@@ -89,11 +89,12 @@ def agrupar_colores(imagen):
 
 
 # Ejemplo de uso
-'''img, bounding_boxes, _ = segmentar('../data/test/images/1003.png')
+'''
+img, bounding_boxes, _ = segmentar('../data/test/images/1003.png')
 
 # Dibujar recuadro 0.330290 0.562228 0.139548 0.234109
 normalized_coords = []
-
+normalized_coords.append([0.5,0.5,0.1,0.1])
 
 
 for normalized_coord in normalized_coords:
@@ -107,4 +108,5 @@ plt.imshow(img)
 plt.show()
 
 print(bounding_boxes)
+
 '''
