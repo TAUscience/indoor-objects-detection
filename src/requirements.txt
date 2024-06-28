@@ -1,0 +1,12 @@
+#segmentation
+torch
+Pillow
+matplotlib
+numpy
+opencv-python
+
+
+#clasitication
+scikit-learn
+numpy
+scipy
