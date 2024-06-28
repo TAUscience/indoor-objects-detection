@@ -9,8 +9,7 @@ def preprocesar(src):
     img = Image.open(src)
     img_np = np.array(img)
     gray = cv2.cvtColor(img_np, cv2.COLOR_RGB2GRAY)
-    equ = cv2.equalizeHist(gray)
-    blurred = cv2.GaussianBlur(equ, (3, 3), 0)
+    blurred = cv2.GaussianBlur(gray, (3, 3), 0)
 
     # Incrementar el contraste usando ecualización del histograma
     equ = cv2.equalizeHist(blurred)
@@ -63,9 +62,7 @@ def segmentar(src):
                 bounding_boxes.append(normalized_bbox)
     
     #______Canny
-    edges = cv2.Canny(equ, 100, 200)
-    plt.imshow(edges)
-    plt.show()
+    edges = cv2.Canny(equ, 50, 100)
     # Encontrar contornos
     contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     # Dibujar bounding boxes
@@ -85,33 +82,29 @@ def agrupar_colores(imagen):
 
     for i in range(1,filas-1):
         for j in range(1,columnas-1):
-            rangoR = imagen[i][j][0] - imagen[i][j][0]
-            rangoG = imagen[i][j][1] - imagen[i][j][1]
-            rangoB = imagen[i][j][2] - imagen[i][j][2]
+            rangoR = imagen[i-1][j][0] - imagen[i][j][0]
+            rangoG = imagen[i-1][j][1] - imagen[i][j][1]
+            rangoB = imagen[i-1][j][2] - imagen[i][j][2]
+
 
 
 # Ejemplo de uso
-'''
-
-img, bounding_boxes, _ = segmentar('../data/test/images/1015.png')
+'''img, bounding_boxes, _ = segmentar('../data/test/images/1003.png')
 
 # Dibujar recuadro 0.330290 0.562228 0.139548 0.234109
 normalized_coords = []
-normalized_coords.append([0.207806, 0.719870, 0.318258, 0.549391])
-normalized_coords.append([0.836290, 0.580489, 0.187742, 0.292283])
-normalized_coords.append([0.784613, 0.279413, 0.056258, 0.296348])
-normalized_coords.append([0.638008, 0.476293, 0.084339, 0.181326])
+
+
 
 for normalized_coord in normalized_coords:
     denormalized_coord = denormalizar_coordenadas(normalized_coord, img)
     # Dibujar el recuadro adicional
     draw = ImageDraw.Draw(img)
-    draw.rectangle(denormalized_coord, outline='blue', width=3)
+    draw.rectangle(denormalized_coord, outline='pink', width=3)
 
 # Mostrar la imagen resultante (opcional)
 plt.imshow(img)
 plt.show()
 
 print(bounding_boxes)
-
 '''
