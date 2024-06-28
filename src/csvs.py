@@ -38,7 +38,12 @@ def csv_characteristics(archivo_entrada, archivo_salida):
         with open(archivo_salida, mode='w', newline='') as archivo_csv_salida:
             writer = csv.writer(archivo_csv_salida)
             # Escribir la cabecera del archivo CSV de salida
-            writer.writerow(['caracteristicas', 'nombre_imagen'])
+            lista=[]
+            for i in range(41):
+                lista.append(f"caract{i}")
+            lista.append("nombre_imagen")
+
+            writer.writerow(lista)
             
             # Procesar cada fila del CSV de entrada
             for row in reader:
@@ -46,7 +51,7 @@ def csv_characteristics(archivo_entrada, archivo_salida):
                 coordenadas = [float(a), float(b), float(w), float(h)]
                 # Obtener las características usando la función proporcionada
 
-                imagen_scr = f'../data/test/images/{nombre_imagen}.png'
+                imagen_scr = f'data/test/images/{nombre_imagen}.png'
 
                 vector_caracteristicas = caract_fragmento(imagen_scr,coordenadas)
                 
@@ -60,7 +65,7 @@ def csv_characteristics(archivo_entrada, archivo_salida):
 
 
 # Ejemplo de uso
-carpeta_imagenes = '../data/test/images'
+"""carpeta_imagenes = '../data/test/images'
 num_imagenes = 2  # Número de imágenes a procesar
 archivo_coordenadas = '../data/coordenadas.csv'  # Nombre del archivo CSV de salida de coordenadas
 archivo_caracteristicas = '../data/caracteristicas.csv'  # Nombre del archivo CSV de salida de características
@@ -70,3 +75,4 @@ csv_coordinates(carpeta_imagenes, num_imagenes, archivo_coordenadas)
 
 # Generar el archivo CSV de características
 csv_characteristics(archivo_coordenadas, archivo_caracteristicas)
+"""
