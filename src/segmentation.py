@@ -90,23 +90,27 @@ def agrupar_colores(imagen):
 
 # Ejemplo de uso
 '''
-img, bounding_boxes, _ = segmentar('../data/test/images/1003.png')
-
-# Dibujar recuadro 0.330290 0.562228 0.139548 0.234109
-normalized_coords = []
-normalized_coords.append([0.5,0.5,0.1,0.1])
 
 
-for normalized_coord in normalized_coords:
-    denormalized_coord = denormalizar_coordenadas(normalized_coord, img)
-    # Dibujar el recuadro adicional
-    draw = ImageDraw.Draw(img)
-    draw.rectangle(denormalized_coord, outline='pink', width=3)
+
+img, bounding_boxes, _ = segmentar('data/test/images/1003.png')
+
+print(bounding_boxes)
+
+denormalizadas = []
+
+for fila in bounding_boxes:
+    coo = denormalizar_coordenadas(fila, img)
+    denormalizadas.append(coo)
+
+print(denormalizadas)
 
 # Mostrar la imagen resultante (opcional)
 plt.imshow(img)
 plt.show()
 
 print(bounding_boxes)
+
+
 
 '''
