@@ -57,7 +57,7 @@ def csv_characteristics(archivo_entrada, archivo_salida):
                 
                 # Convertir el vector de características a una lista de cadenas
                 vector_caracteristicas_str = [str(x) for x in vector_caracteristicas]
-                
+                nombre_sin_extension = os.path.splitext(nombre_imagen)[0]
                 # Escribir las características y el nombre de la imagen en el CSV de salida
                 writer.writerow(vector_caracteristicas_str)
 
