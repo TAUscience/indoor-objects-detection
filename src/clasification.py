@@ -46,6 +46,6 @@ def clasificar_etiquetar(ruta_ds,k,ruta_guardado):
 
 
 """Ejemplo de uso"""
-#x=clasificar_etiquetar("data/datasetPrueba.csv",3,"data/datasetPruebaEtiquetado.csv")
-#print(x)
+x=clasificar_etiquetar("../data/datasetPrueba.csv",3,"../data/datasetPruebaEtiquetado.csv")
+print(x)
 
